@@ -35,9 +35,9 @@ local ban_type = {
 	["Competitive"] = "competitive"
 }
 local VACCheckbox = ui.new_checkbox("LUA", "A", "Fake VAC ban")
-local LengthDays = ui.new_slider("LUA","A", "Ban length in days", 0, 49, 1)
-local LengthMins = ui.new_slider("LUA","A", "Ban length in minutes", 0, 60, 1)
-local LengthSeconds = ui.new_slider("LUA","A", "Ban length in seconds", 0, 60, 1)
+local LengthDays = ui.new_slider("LUA","A", "Ban length in days", 0, 49, 0)
+local LengthMins = ui.new_slider("LUA","A", "Ban length in minutes", 0, 60, 0)
+local LengthSeconds = ui.new_slider("LUA","A", "Ban length in seconds", 0, 60, 0)
 local Reason = ui.new_combobox("lua", "A", "Reason for ban", collect_keys(ban_reason))
 local bantype = ui.new_combobox("lua", "A", "Type for ban", collect_keys(ban_type))
 
