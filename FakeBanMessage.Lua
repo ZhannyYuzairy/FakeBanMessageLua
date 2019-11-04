@@ -35,7 +35,9 @@ local ban_type = {
 	["Competitive"] = "competitive"
 }
 local VACCheckbox = ui.new_checkbox("LUA", "A", "Fake VAC ban")
-local Length = ui.new_slider("LUA","A", "Ban Length in mins", 1, 70561, 60)
+local LengthDays = ui.new_slider("LUA","A", "Ban length in days", 0, 49, 1)
+local LengthMins = ui.new_slider("LUA","A", "Ban length in minutes", 0, 60, 1)
+local LengthSeconds = ui.new_slider("LUA","A", "Ban length in seconds", 0, 60, 1)
 local Reason = ui.new_combobox("lua", "A", "Reason for ban", collect_keys(ban_reason))
 local bantype = ui.new_combobox("lua", "A", "Type for ban", collect_keys(ban_type))
 
@@ -43,7 +45,7 @@ local function applyban()
    js.eval([[
    	CompetitiveMatchAPI.GetCooldownType = function() {return "]]..ban_type[ui.get(bantype)]..[["}
    	CompetitiveMatchAPI.GetCooldownReason = function() {return "]]..ban_reason[ui.get(Reason)]..[["}
-   	CompetitiveMatchAPI.GetCooldownSecondsRemaining = function() {return ]]..ui.get(Length) * 60 ..[[}]])
+   	CompetitiveMatchAPI.GetCooldownSecondsRemaining = function() {return ]]..ui.get(LengthDays) * 86400 + ui.get(LengthMins) *60 + ui.get(LengthSeconds) ..[[}]])
 end
 local function updateVAC()
 	 js.eval([[MyPersonaAPI.IsVacBanned = function() {return ]] ..tostring(ui.get(VACCheckbox))	..[[}]])
