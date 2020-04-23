@@ -1,4 +1,4 @@
-local js = require("access_panorama") 
+  
 local function collect_keys(tbl, sort)
     local keys = {}
     sort = sort or true
@@ -41,15 +41,18 @@ local LengthMins = ui.new_slider("LUA","A", "Ban length in minutes", 0, 60, 0)
 local LengthSeconds = ui.new_slider("LUA","A", "Ban length in seconds", 0, 60, 0)
 local Reason = ui.new_combobox("lua", "A", "Reason for ban", collect_keys(ban_reason))
 local bantype = ui.new_combobox("lua", "A", "Type for ban", collect_keys(ban_type))
+local banTimer = ui.new_checkbox("lua", "A", "Decrease cooldown")
 
 local function applyban()
-   js.eval([[
+	local js = panorama.loadstring([[
    	CompetitiveMatchAPI.GetCooldownType = function() {return "]]..ban_type[ui.get(bantype)]..[["}
    	CompetitiveMatchAPI.GetCooldownReason = function() {return "]]..ban_reason[ui.get(Reason)]..[["}
    	CompetitiveMatchAPI.GetCooldownSecondsRemaining = function() { return ]]..ui.get(LengthDays) * 86400 + ui.get(LengthHours) * 3600 + ui.get(LengthMins) *60 + ui.get(LengthSeconds) ..[[}
    	var cooldown = CompetitiveMatchAPI.GetCooldownSecondsRemaining();
 	function decreaseCooldown() {
-	    cooldown--;
+		if (]] ..tostring(ui.get(banTimer))..[[) {
+		cooldown--;
+		}
 	    Checkcooldown()
 	}
 	function Popupreset(){
@@ -67,10 +70,12 @@ local function applyban()
 	CompetitiveMatchAPI.GetCooldownSecondsRemaining = function() {
 	    return cooldown;
 }]])
+js()
 
 end
 local function updateVAC()
-	 js.eval([[MyPersonaAPI.IsVacBanned = function() {return ]] ..tostring(ui.get(VACCheckbox))	..[[}]])
+	local js =  panorama.loadstring([[MyPersonaAPI.IsVacBanned = function() {return ]] ..tostring(ui.get(VACCheckbox))	..[[}]])
+	js()	
 end
 ui.set_callback(VACCheckbox, updateVAC)
 
