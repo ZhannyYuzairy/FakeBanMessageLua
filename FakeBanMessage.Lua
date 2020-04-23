@@ -13,7 +13,7 @@ end
 local ban_reason = {
 		["Abandon"] = "#SFUI_CooldownExplanationReason_Abandon",
 		["Resolving MM state account"] = "#SFUI_CooldownExplanationReason_Abandon_Grace",
-		["Greif"] = "#SFUI_CooldownExplanationReason_ConvictedForBehavior",
+		["Grief"] = "#SFUI_CooldownExplanationReason_ConvictedForBehavior",
 		["Cheating"] = "#SFUI_CooldownExplanationReason_ConvictedForCheating",
 		["Disconnected for too long"] = "#SFUI_CooldownExplanationReason_DisconnectedTooLong",
 		["Resolving MM State Match"] = "#SFUI_CooldownExplanationReason_DisconnectedTooLong_Grace",
